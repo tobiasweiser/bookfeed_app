@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "43229610735",
+    "project_id": "bookfeed-97956",
+    "storage_bucket": "bookfeed-97956.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:43229610735:android:30083cfdf09498c7f4111a",
+        "android_client_info": {
+          "package_name": "com.example.bookfeed_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeMPoaiaW6G56y2M4u_MakHyKiizjZSVc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
