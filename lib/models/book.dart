@@ -3,31 +3,39 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'book.g.dart';
 
+/// Hilfsfunktionen für Timestamp <> DateTime Mapping
+DateTime _timestampToDate(Timestamp timestamp) => timestamp.toDate();
+Timestamp _dateTimeToTimestamp(DateTime date) => Timestamp.fromDate(date);
+
 @JsonSerializable()
 class Book {
   @JsonKey(ignore: true)
-  final String? id;         // Doc-ID: ignorieren beim JSON
+  final String? id;
 
-  final String title;       // Titel des Buchs
-  final String author;      // Autor
-  final String coverUrl;    // Link zum Cover-Bild
-  final String summary;     // Kurze Zusammenfassung
-  final String affiliateUrl;// Link zum E-Book / Kauf
-  final List<String>? tags; // Themen / Genres
-  final DateTime createdAt; // Erstellungszeitpunkt
+  final String title;
+  final String? author;
+  final String? coverUrl;
+  final String? summary;
+  final String? affiliateUrl;
+
+  @JsonKey(defaultValue: [])
+  final List<String> tags;
+
+  @JsonKey(fromJson: _timestampToDate, toJson: _dateTimeToTimestamp)
+  final DateTime createdAt;
 
   Book({
     this.id,
     required this.title,
-    required this.author,
-    required this.coverUrl,
-    required this.summary,
-    required this.affiliateUrl,
-    this.tags,
+    this.author,
+    this.coverUrl,
+    this.summary,
+    this.affiliateUrl,
+    this.tags = const [],
     required this.createdAt,
   });
 
-  /// Baut aus Firestore-Snapshot ein Book-Objekt
+  /// Baut aus einem Firestore-Dokument ein Book-Objekt
   factory Book.fromFirestore(DocumentSnapshot<Map<String, dynamic>> doc) {
     final data = doc.data()!;
     final book = Book.fromJson(data);
@@ -38,13 +46,13 @@ class Book {
   Map<String, dynamic> toJson() => _$BookToJson(this);
 
   Book copyWith({String? id}) => Book(
-    id: id ?? this.id,
-    title: title,
-    author: author,
-    coverUrl: coverUrl,
-    summary: summary,
-    affiliateUrl: affiliateUrl,
-    tags: tags,
-    createdAt: createdAt,
-  );
+        id: id ?? this.id,
+        title: title,
+        author: author,
+        coverUrl: coverUrl,
+        summary: summary,
+        affiliateUrl: affiliateUrl,
+        tags: tags,
+        createdAt: createdAt,
+      );
 }

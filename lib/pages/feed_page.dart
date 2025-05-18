@@ -36,9 +36,17 @@ class FeedPage extends StatelessWidget {
               return Card(
                 margin: const EdgeInsets.only(bottom: 16),
                 child: ListTile(
-                  leading: Image.network(book.coverUrl, width: 50, fit: BoxFit.cover),
+                  leading: book.coverUrl != null
+                      ? Image.network(book.coverUrl!, width: 50, fit: BoxFit.cover)
+                      : Container(
+                          width: 50,
+                          height: 75,
+                          color: const Color.fromARGB(255, 192, 0, 0),
+                          alignment: Alignment.center,
+                          child: const Icon(Icons.book, color: Colors.white54),
+                        ),
                   title: Text(book.title),
-                  subtitle: Text(book.author),
+                  subtitle: Text(book.author ?? ''),
                   trailing: IconButton(
                     icon: const Icon(Icons.favorite_border),
                     onPressed: () {
